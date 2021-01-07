@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Pedra, Papel e Tesoura</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="cover.css" rel="stylesheet">
+  </head>
+
+  <body class="text-center">
+
+    <div class="cover-container d-flex w-100 h-100 p-2 mx-auto flex-column">
+      <header class="masthead mb-auto">
+        <div class="inner">
+          <h3>Pedra, Papel e Tesoura</h3>
+          <!-- <nav class="nav nav-masthead justify-content-center">
+            <a class="nav-link active" href="#">Home</a>
+            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="#">Contact</a>
+          </nav> -->
+        </div>
+      </header>
+
+      <main role="" class="">
+
+        <!-- Placar -->        
+        <div class="alert alert-primary" role="alert" id="placar" style="display: none;"></div>
+
+        <div class="row form-group">
+            <div class="col-md-6 box"  >
+              <h3 class="cover-heading">Você: <span id="seusPontos">0</span> <small>pts</small> </h3><br><br>
+
+              <div class="row form-group">
+                <div class="col-md-4" >
+                  <a onclick="jogada(0);" title="Pedra" style="cursor: pointer;" >
+                    <img src="img/pedra.png" style="width: 55px;" />
+                  </a>
+                </div>
+
+                <div class="col-md-4" >
+                  <a onclick="jogada(1);" title="Papel" style="cursor: pointer; position: relative; top: 10px;" >
+                    <img src="img/papel.png" />
+                  </a>
+                </div>
+
+                <div class="col-md-4" >
+                  <a onclick="jogada(2);" title="Tesoura" style="cursor: pointer;" >
+                    <img src="img/tesoura.png" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 box">
+              <h3 class="cover-heading">Oponente: <span id="oponentePontos">0</span> <small>pts</small> </h3>      
+
+              <div class="row form-group" id="imgOponente">
+                <div class="col-md-12" >                  
+                  <img src="img/oponente.png" style="width: 90px; position: relative; top: 20px;" />  
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12" >                  
+                  <img id="imgTemp" src="" style="/*width: 90px; */position: relative; top: 20px;" />
+                </div>
+              </div>
+
+
+            </div>
+          
+        </div>
+
+        
+        <p class="lead">Clique sobre a pedra, papel ou tesoura para jogar com seu oponente.</p>
+        <p class="lead">
+          <a href="#" class="btn btn-lg btn-secondary" onclick="reiniciar();">Reiniciar pontuação</a>
+        </p>
+      </main>
+
+      <footer class="mastfoot mt-auto">
+        <div class="inner">
+          <p>Desenvolvido por <a href="https://getprice.com.br/formulario-contato/" target="_blank">Roberto Delavi</a></p>
+        </div>
+      </footer>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="assets/js/vendor/popper.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+<script type="text/javascript">
+
+  var pt1 = 0, pt2 = 0;
+  function jogada(p1){
+    var p2 = Math.floor(Math.random() * 3);
+
+    // Valida imagem oponente
+    mostraJogadaOponente(p2);
+
+    // Valida pontos
+    if((p1 == 0 && p2 == 2) || (p1 == 1 && p2 == 0) || (p1 == 2 && p2 == 1)){ // Condição que vc ganha
+      pt1 += 1;
+      document.getElementById('seusPontos').innerHTML = pt1;
+      atualizaMsgPlacar(1);
+    }else
+    if((p2 == 0 && p1 == 2) || (p2 == 1 && p1 == 0) || (p2 == 2 && p1 == 1)){ // Condição que vc perde
+      pt2 += 1;
+      document.getElementById('oponentePontos').innerHTML = pt2;
+      atualizaMsgPlacar(-1);
+    }else{
+      atualizaMsgPlacar(0);
+    }
+  }
+
+  function mostraJogadaOponente(p){
+    if(p == 0){ // Pedra
+      document.getElementById('imgOponente').style.display = 'none';
+      $("#imgTemp").attr("src","img/pedra.png");
+      setTimeout(function (){
+        document.getElementById('imgOponente').style.display = 'block';
+        $("#imgTemp").attr("src","");
+      }, 2000);      
+    }else
+    if(p == 1){ // Papel
+      document.getElementById('imgOponente').style.display = 'none';
+      $("#imgTemp").attr("src","img/papel.png");
+      setTimeout(function (){
+        document.getElementById('imgOponente').style.display = 'block';
+        $("#imgTemp").attr("src","");
+      }, 2000);      
+    }else{    // Tesoura
+      document.getElementById('imgOponente').style.display = 'none';
+      $("#imgTemp").attr("src","img/tesoura.png");
+      setTimeout(function (){
+        document.getElementById('imgOponente').style.display = 'block';
+        $("#imgTemp").attr("src","");
+      }, 2000);      
+    }
+  }
+
+  function reiniciar(){
+    pt1 = 0, pt2 = 0;
+    document.getElementById('seusPontos').innerHTML = 0;
+    document.getElementById('oponentePontos').innerHTML = 0;
+  }
+
+  function atualizaMsgPlacar(res){
+    if (res == 1) {
+      $("#placar").html("Você ganhou!");
+      $("#placar").attr("class","alert alert-success");
+      piscaMsgPlacar();
+    }else
+    if (res == -1) {
+      $("#placar").html("Você perdeu!");
+      $("#placar").attr("class","alert alert-danger");
+      piscaMsgPlacar();
+    }else{
+      $("#placar").html("Empatou!");
+      $("#placar").attr("class","alert alert-warning");
+      piscaMsgPlacar();
+    } 
+  }
+
+  function piscaMsgPlacar(){
+    document.getElementById('placar').style.display = 'block';
+    setTimeout(function (){
+      document.getElementById('placar').style.display = 'none';
+    }, 2000);      
+  }
+</script>
+
+<style type="text/css">
+  .box{
+    border: 1px solid #FFF;
+    padding: 50px;
+  }
+</style>
